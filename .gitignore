@@ -1,0 +1,6 @@
+
+#General
+**.vscode
+# Flink Consumer
+flink-consumer/.mvn
+flink-consumer/target

@@ -30,5 +30,3 @@ while True:
     stop_dest = eta["stpDe"]
     arrival_time = eta["arrT"]
     print(f"Arrival time for {stop_name} -> {stop_dest} is {arrival_time}")
-
-c.close()
