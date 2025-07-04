@@ -1,6 +1,7 @@
 
 #General
 **.vscode
+**.venv
 # Flink Consumer
 flink-consumer/.mvn
 flink-consumer/target
