@@ -1,11 +1,15 @@
 package com.xavierruiz;
 
+import com.xavierruiz.models.TrainData;
+import com.xavierruiz.utils.JsonUtils;
+
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
-
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.types.Row;
 
 public class Consumer {
     public static void main(String[] args) throws Exception {
@@ -21,7 +25,12 @@ public class Consumer {
                 .build();
 
         // Simple print as a sink
-        env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source").print();
+        DataStream<Row> parsedStream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source")
+                .map(value -> {
+                    // Assuming JsonUtils.parseToRow parses a JSON string to a Row object
+                    System.out.println(value);
+                    return Row.of("value", 123);
+                });
 
         env.execute("Flink Kafka Consumer");
     }

@@ -1,6 +1,7 @@
 from confluent_kafka import Consumer
 import json
 from datetime import datetime
+import sys
 
 c = Consumer(
     {
@@ -16,6 +17,7 @@ while True:
     msg = c.poll(1.0)
 
     if msg is None:
+        print("Msg is none")
         continue
     if msg.error():
         print("Consumer error: {}".format(msg.error()))

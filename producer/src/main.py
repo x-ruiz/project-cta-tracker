@@ -17,6 +17,7 @@ def extract_data() -> str:
 
     response_dict = xmltodict.parse(response)
     json_data = json.dumps(response_dict, indent=4)
+    print(json_data)
     return json_data
 
 
