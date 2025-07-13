@@ -19,7 +19,7 @@ mvn clean package -DskipTests
 
 make sure to build a fat jar for flink which includes all dependencies
 
-flink run target/flink-consumer-1.0-SNAPSHOT.jar 9000
+flink run target/flink-consumer-1.0-SNAPSHOT.jar
 
 ## Producer
 ```python3 producer/src/main.py```

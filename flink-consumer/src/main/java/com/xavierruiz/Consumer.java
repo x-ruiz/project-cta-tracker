@@ -1,6 +1,8 @@
 package com.xavierruiz;
 
-import com.xavierruiz.models.TrainData;
+import com.google.gson.Gson;
+import com.xavierruiz.models.CtaResponse;
+import com.xavierruiz.models.CtaData;
 import com.xavierruiz.utils.JsonUtils;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -12,6 +14,8 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.types.Row;
 
 public class Consumer {
+    private static final Gson gson = new Gson();
+
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -25,10 +29,12 @@ public class Consumer {
                 .build();
 
         // Simple print as a sink
+        // TrainData trainData = new TrainData();
         DataStream<Row> parsedStream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source")
                 .map(value -> {
-                    // Assuming JsonUtils.parseToRow parses a JSON string to a Row object
-                    System.out.println(value);
+                    // CtaData ctaData = JsonUtils.toJson(value, CtaData.class);
+                    CtaResponse ctaResponse = JsonUtils.toJson(value, CtaResponse.class);
+                    CtaData ctaData = ctaResponse.getCtatt();
                     return Row.of("value", 123);
                 });
 
